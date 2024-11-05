@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+
+@(Html.Kendo().Grid<Product>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Id).Hidden();
+        columns.Bound(p => p.Sku);
+        columns.Bound(p => p.Barcode);
+        columns.Bound(p => p.Title);
+        columns.Bound(p => p.Vat);
+        columns.Bound(p => p.Quantity);
+        columns.Bound(p => p.Price);
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Groupable()
+    .Filterable()
+    .HtmlAttributes(new { style = "height:100%;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Read(read => read.Action("ReadProducts", "Product"))
+    )
+    )
